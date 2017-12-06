@@ -10,6 +10,8 @@ public class Gerenciador {
 	static int porta;
 	public static ArrayList<EntidadeHandler> entidades = new ArrayList<>();
 	static Gerenciador gerenciador;
+	public static int totalCPU = 0;
+	public static int totalMemo = 0;
 	
 
 	@SuppressWarnings("resource")

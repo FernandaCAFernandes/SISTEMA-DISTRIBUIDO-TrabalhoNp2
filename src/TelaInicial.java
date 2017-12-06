@@ -15,10 +15,8 @@ public class TelaInicial extends JFrame {
 	private JPanel contentPane;
 	private JTextField ip;
 	private JTextField porta;
-	
+
 	public Gerenciador gerenciador;
-	
-	
 
 	/**
 	 * Launch the application.
@@ -46,32 +44,31 @@ public class TelaInicial extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblIp = new JLabel("IP");
 		lblIp.setBounds(57, 59, 56, 16);
 		contentPane.add(lblIp);
-		
+
 		JLabel lblPorta = new JLabel("PORTA");
 		lblPorta.setBounds(57, 111, 56, 16);
 		contentPane.add(lblPorta);
-		
+
 		ip = new JTextField();
 		ip.setBounds(135, 56, 116, 22);
 		contentPane.add(ip);
 		ip.setColumns(10);
-		
+
 		porta = new JTextField();
 		porta.setBounds(135, 108, 116, 22);
 		contentPane.add(porta);
 		porta.setColumns(10);
-		
+
 		JButton btnLogar = new JButton("CONECTAR");
 		btnLogar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {		
-				
+			public void actionPerformed(ActionEvent arg0) {
+
 				gerenciador.startup(ip.getText(), Integer.parseInt(porta.getText()));
-				
-				
+
 			}
 		});
 		btnLogar.setBounds(268, 161, 97, 25);

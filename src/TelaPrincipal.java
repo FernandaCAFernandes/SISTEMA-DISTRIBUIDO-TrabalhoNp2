@@ -4,6 +4,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -23,6 +26,8 @@ public class TelaPrincipal extends JFrame {
 	public static JTextField memoriaTotal;
 	public static JTextField cederQtde;
 	public static JTextField receberQtde;
+	
+	
 
 	/**
 	 * Launch the application.
@@ -33,11 +38,21 @@ public class TelaPrincipal extends JFrame {
 				try {
 					TelaPrincipal frame = new TelaPrincipal();
 					frame.setVisible(true);
+					
+					 
+				
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-		});
+		});	
+	}
+	
+	public static void AttLabels(int qtdeTotalCpu, int qtdeTotalMemo) {
+		CpuTotal.setText(Integer.toString(qtdeTotalCpu));
+		memoriaTotal.setText(Integer.toString(qtdeTotalMemo));
+		
 	}
 
 	/**
@@ -186,5 +201,10 @@ public class TelaPrincipal extends JFrame {
 		JButton btnLiberarRecebido = new JButton("Liberar");
 		btnLiberarRecebido.setBounds(328, 314, 97, 25);
 		contentPane.add(btnLiberarRecebido);
+		
+		
+		
+		
+		
 	}
 }

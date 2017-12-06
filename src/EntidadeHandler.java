@@ -1,7 +1,9 @@
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class EntidadeHandler implements Runnable {
 
@@ -28,7 +30,7 @@ public class EntidadeHandler implements Runnable {
 	// informar recursos reservados
 	// [1]- tipo de msg ([2] - se memoria ou cpu?) [18] - qtde ??
 
-	public static void SalvarCpu(String qtde) throws IOException {
+	public static void SalvarCpuLocal(String qtde) throws IOException {
 		// buffer[0] = 1
 		byte[] buffer = new byte[20];
 		buffer[0] = 1;
@@ -40,7 +42,7 @@ public class EntidadeHandler implements Runnable {
 		out.write(buffer);
 	}
 
-	public static void SalvarMem(String qtde) throws IOException {
+	public static void SalvarMemLocal(String qtde) throws IOException {
 		// buffer[0] = 2
 		byte[] buffer = new byte[20];
 		buffer[0] = 2;
@@ -50,44 +52,17 @@ public class EntidadeHandler implements Runnable {
 		}
 		out.write(buffer);
 	}
-
-	public static void TotalCpu() throws IOException {
-		// 32?? ou 4 (4 bytes on a 32/64-bit system)??
-		// buffer [0] = 3
-		byte[] buffer = new byte[1 + Gerenciador.entidades.size() * 32];
-		buffer[0] = 3;
-		for (int i = 0; i < Gerenciador.entidades.size(); i++) {
-			buffer[i + 1] = (byte) Gerenciador.entidades.get(i).entidade.getCpu();
-		}
+	
+	public static void Conexao () throws IOException {
+		byte [] buffer = new byte [1];
+		buffer [0] = 3;
+		
 		out.write(buffer);
-
 	}
-
-	public static void TotalMemo() throws IOException {
-		// buffer[0] = 4;
-		byte[] buffer = new byte[1 + Gerenciador.entidades.size() * 32];
-		buffer[0] = 4;
-		for (int i = 0; i < Gerenciador.entidades.size(); i++) {
-			buffer[i + 1] = (byte) Gerenciador.entidades.get(i).entidade.getMemoria();
-		}
-		out.write(buffer);
-
-	}
-
-	public static void BloqueadoCpu() throws IOException {
-		// buffer[0] = 5;
-	}
-
-	public static void BloqueadoMemo() throws IOException {
-		// buffer[0] = 6;
-	}
-
-	public static void ReservadoCpu() throws IOException {
-		// buffer[0] = 7;
-	}
-
-	public static void ReservadoMemo() throws IOException {
-		// buffer[0] = 8;
+	
+	public static void validar () throws IOException {
+		byte[] buffer = new byte [1];
+		buffer [0] = 9;
 	}
 
 	@Override
@@ -101,7 +76,7 @@ public class EntidadeHandler implements Runnable {
 				if (size > 0) {
 					buffer = new byte[size];
 					in.read(buffer);
-					AnalizadorBuffer();
+					AnalizadorDoBuffer();
 
 				}
 			}
@@ -114,15 +89,23 @@ public class EntidadeHandler implements Runnable {
 
 	}
 
-	public void AnalizadorBuffer() {
+	public void AnalizadorDoBuffer() {
 		// ?????
-		// String.trim() - remove espacos em branco de ambos os lados da string.	
+		// String.trim() - remove espacos em branco de ambos os lados da string.
 		int type = buffer[0] & 255;
+		try {
+			switch (type) {
+			case 1:
+				// passando o valor no buffer pra uma string codificada em utf-8
+				byte[] string = Arrays.copyOfRange(buffer, 1, buffer.length);
+				entidade.setCpu(Integer.parseInt(((new String(string, "UTF-8")).trim())));
+				//TelaPrincipal.CpuLocal.setText();
 
-		switch (type) {
-		case 1:
-
+			}
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
 		}
+
 	}
 
 }
