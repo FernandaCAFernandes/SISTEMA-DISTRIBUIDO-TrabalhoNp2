@@ -97,9 +97,15 @@ public class EntidadeHandler implements Runnable {
 			switch (type) {
 			case 1:
 				// passando o valor no buffer pra uma string codificada em utf-8
-				byte[] string = Arrays.copyOfRange(buffer, 1, buffer.length);
-				entidade.setCpu(Integer.parseInt(((new String(string, "UTF-8")).trim())));
-				//TelaPrincipal.CpuLocal.setText();
+				//ler o buffer, pega o conteudo do buffer, salva na variavel da entidade seta no jTextField;
+				byte[] stringCpu = Arrays.copyOfRange(buffer, 1, buffer.length);
+				entidade.setCpu(Integer.parseInt(((new String(stringCpu, "UTF-8")).trim())));
+				TelaPrincipal.CpuLocal.setText(Integer.toString(entidade.getCpu()));
+				break;
+			case 2:
+				byte[] stringMemo = Arrays.copyOfRange(buffer,  1 , buffer.length);
+				entidade.setMemoria(Integer.parseInt(((new String(stringMemo, "UTF-8")).trim())));
+				TelaPrincipal.MemoriaLocal.setText(Integer.toString(entidade.getMemoria()));
 
 			}
 		} catch (UnsupportedEncodingException e) {
