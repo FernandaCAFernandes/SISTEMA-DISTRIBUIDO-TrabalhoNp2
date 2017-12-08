@@ -3,26 +3,31 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 
+
 public class Gerenciador {
 
-	static Entidade entidade;
+	static Entidade entidade = new Entidade(0, 0);
 	static Server serversocket;
 	static int porta;
 	public static ArrayList<EntidadeHandler> entidades = new ArrayList<>();
 	static Gerenciador gerenciador;
 	public static int totalCPU = 0;
 	public static int totalMemo = 0;
+	MyRunnable myRunnable = new MyRunnable();	
+	
 	
 
 	@SuppressWarnings("resource")
 	public Gerenciador(String ip, int porta) {
-		
+			
 		this.porta = porta;
 		Socket socket = new Socket();
 		new Thread(serversocket).start();
+		
+		
 
 		// entidade que se conecta no sistema nao e a primeira. .
-		if (!ip.equals("inicial") && porta != 0) {
+		if (!ip.equals("") && porta != 0) {
 
 			try {
 				socket.connect(new InetSocketAddress(ip, porta));
@@ -38,6 +43,9 @@ public class Gerenciador {
 	public void startup(String ip, int porta) {
 		if (gerenciador == null) {
 			gerenciador = new Gerenciador (ip, porta);
+			new Thread(myRunnable).start();
+			
+			
 		}
 	}
 

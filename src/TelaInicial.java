@@ -66,7 +66,9 @@ public class TelaInicial extends JFrame {
 		JButton btnLogar = new JButton("CONECTAR");
 		btnLogar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
+				gerenciador = new Gerenciador(ip.getText(), Integer.parseInt(porta.getText()));
+				TelaPrincipal telaPrincipal = new TelaPrincipal();
+				telaPrincipal.setVisible(true);
 				gerenciador.startup(ip.getText(), Integer.parseInt(porta.getText()));
 
 			}

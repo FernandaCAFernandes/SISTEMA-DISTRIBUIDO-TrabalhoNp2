@@ -7,6 +7,11 @@ public class Entidade {
 	private int recursoCpu;
 	private int recursoMemoria;
 	
+	public Entidade (int cpu, int memoria) {
+		this.cpu = cpu;
+		this.memoria = memoria;
+	}
+	
 	
 	public int getCpu() {
 		return cpu;

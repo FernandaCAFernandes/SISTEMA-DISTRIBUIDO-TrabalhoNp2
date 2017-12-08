@@ -52,17 +52,21 @@ public class EntidadeHandler implements Runnable {
 		}
 		out.write(buffer);
 	}
-	
-	public static void Conexao () throws IOException {
-		byte [] buffer = new byte [1];
-		buffer [0] = 3;
-		
+
+	public static void conexao() throws IOException {
+		// codigo para iniciar conexao da entidade que acabou
+		// de entrar com todas as outros conectados no server q a entidade entrou;
+		byte[] buffer = new byte[1];
+		buffer[0] = 3;
+
 		out.write(buffer);
+
 	}
-	
-	public static void validar () throws IOException {
-		byte[] buffer = new byte [1];
-		buffer [0] = 9;
+
+	public static void validar() throws IOException {
+		// validar que a conexao esta estabelecida com somatorio
+		byte[] buffer = new byte[1];
+		buffer[0] = 9;
 	}
 
 	@Override
@@ -97,15 +101,46 @@ public class EntidadeHandler implements Runnable {
 			switch (type) {
 			case 1:
 				// passando o valor no buffer pra uma string codificada em utf-8
-				//ler o buffer, pega o conteudo do buffer, salva na variavel da entidade seta no jTextField;
+				// ler o buffer, pega o conteudo do buffer, salva na variavel da entidade seta
+				// no jTextField;
 				byte[] stringCpu = Arrays.copyOfRange(buffer, 1, buffer.length);
 				entidade.setCpu(Integer.parseInt(((new String(stringCpu, "UTF-8")).trim())));
 				TelaPrincipal.CpuLocal.setText(Integer.toString(entidade.getCpu()));
 				break;
 			case 2:
-				byte[] stringMemo = Arrays.copyOfRange(buffer,  1 , buffer.length);
+				// msm coisa
+				byte[] stringMemo = Arrays.copyOfRange(buffer, 1, buffer.length);
 				entidade.setMemoria(Integer.parseInt(((new String(stringMemo, "UTF-8")).trim())));
 				TelaPrincipal.MemoriaLocal.setText(Integer.toString(entidade.getMemoria()));
+				break;
+			case 3:
+				// ip 15 (123.123.123.123) porta 4( 1 2 3 4)
+				// pega ip e porta de cada entidade conectada ao servidor q entidade nova se
+				// conectou;
+				// - 1 nao conta a entidade que entrou?
+				int auxIpOuPorta = 0;
+				byte[] buffer = new byte[Gerenciador.entidades.size() * 19 + 1];
+				// codigo retornando os ips/portas
+				buffer[0] = 4;
+				int j = 0;
+
+				// right?
+
+				for (int i = 0; i < Gerenciador.entidades.size(); i++) {
+					String aux = Gerenciador.entidades.get(i).ip + Gerenciador.entidades.get(i).porta;
+					for (; j < Gerenciador.entidades.size() * 19;) {
+						buffer[j + 1] = (byte) aux.codePointAt(j);
+						j++;
+						if (j % 19 == 0) {
+							break;
+						}
+
+						// pra cada byte do aux add ip porta a string.
+
+					}
+
+				}
+				// out.write(buffer); ?
 
 			}
 		} catch (UnsupportedEncodingException e) {
