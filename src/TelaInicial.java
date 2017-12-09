@@ -8,13 +8,15 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Random;
 import java.awt.event.ActionEvent;
 
 public class TelaInicial extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField ip;
-	private JTextField porta;
+	public static JTextField porta;
+	public static int port;
 
 	public Gerenciador gerenciador;
 
@@ -27,6 +29,9 @@ public class TelaInicial extends JFrame {
 				try {
 					TelaInicial frame = new TelaInicial();
 					frame.setVisible(true);
+					//Random r = new Random();
+					//String sp = String.format("%04d", r.nextInt(10000));
+					//port = Integer.parseInt(sp);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -65,11 +70,22 @@ public class TelaInicial extends JFrame {
 
 		JButton btnLogar = new JButton("CONECTAR");
 		btnLogar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				gerenciador = new Gerenciador(ip.getText(), Integer.parseInt(porta.getText()));
-				TelaPrincipal telaPrincipal = new TelaPrincipal();
-				telaPrincipal.setVisible(true);
-				gerenciador.startup(ip.getText(), Integer.parseInt(porta.getText()));
+			public void actionPerformed(ActionEvent e) {
+				
+				if (e.getSource() == btnLogar) {
+					
+					
+					gerenciador = new Gerenciador(ip.getText());
+					TelaPrincipal telaPrincipal = new TelaPrincipal();
+					telaPrincipal.setVisible(true);	
+					gerenciador.startup(ip.getText());
+					
+					System.out.println(gerenciador.porta);
+					telaPrincipal.randomDoor.setText(Integer.toString(gerenciador.porta));
+					
+					dispose();
+					
+				}
 
 			}
 		});

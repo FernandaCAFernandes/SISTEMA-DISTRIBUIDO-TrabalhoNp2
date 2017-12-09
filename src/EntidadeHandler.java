@@ -2,8 +2,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Arrays;
+
+import com.ibm.icu.impl.UResource.Array;
 
 public class EntidadeHandler implements Runnable {
 
@@ -13,7 +16,7 @@ public class EntidadeHandler implements Runnable {
 	Socket socket;
 	InputStream in;
 	static OutputStream out;
-	byte[] buffer;
+	static byte[] buffer;
 
 	public boolean stop;
 
@@ -21,6 +24,14 @@ public class EntidadeHandler implements Runnable {
 		this.ip = ip;
 		this.porta = porta;
 		this.socket = socket;
+		try {
+			in = socket.getInputStream();
+			out = socket.getOutputStream();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	// sender/ buffer :
@@ -32,7 +43,7 @@ public class EntidadeHandler implements Runnable {
 
 	public static void SalvarCpuLocal(String qtde) throws IOException {
 		// buffer[0] = 1
-		byte[] buffer = new byte[20];
+		buffer = new byte[20];
 		buffer[0] = 1;
 
 		for (int i = 0; i < qtde.length(); i++) {
@@ -56,7 +67,7 @@ public class EntidadeHandler implements Runnable {
 	public static void conexao() throws IOException {
 		// codigo para iniciar conexao da entidade que acabou
 		// de entrar com todas as outros conectados no server q a entidade entrou;
-		byte[] buffer = new byte[1];
+		buffer = new byte[1];
 		buffer[0] = 3;
 
 		out.write(buffer);
@@ -65,7 +76,7 @@ public class EntidadeHandler implements Runnable {
 
 	public static void validar() throws IOException {
 		// validar que a conexao esta estabelecida com somatorio
-		byte[] buffer = new byte[1];
+		buffer = new byte[1];
 		buffer[0] = 9;
 	}
 
@@ -119,31 +130,45 @@ public class EntidadeHandler implements Runnable {
 				// conectou;
 				// - 1 nao conta a entidade que entrou?
 				int auxIpOuPorta = 0;
-				byte[] buffer = new byte[Gerenciador.entidades.size() * 19 + 1];
+				byte[] bufferConec = new byte[Gerenciador.entidades.size() * 19 + 1];
 				// codigo retornando os ips/portas
 				buffer[0] = 4;
-				int j = 0;
-
-				// right?
 
 				for (int i = 0; i < Gerenciador.entidades.size(); i++) {
 					String aux = Gerenciador.entidades.get(i).ip + Gerenciador.entidades.get(i).porta;
-					for (; j < Gerenciador.entidades.size() * 19;) {
-						buffer[j + 1] = (byte) aux.codePointAt(j);
-						j++;
-						if (j % 19 == 0) {
-							break;
-						}
-
-						// pra cada byte do aux add ip porta a string.
+					for (int j = i * 19; j < i * 19; j++) {
+						bufferConec[j + 1] = (byte) aux.codePointAt(j);
 
 					}
 
 				}
-				// out.write(buffer); ?
+				out.write(bufferConec);
+				break;
+
+			case 4:
+				// lere bufffer e chamar metodo p/ AddEntidade
+
+				byte[] stringIp = new byte[15];
+				byte[] stringPorta = new byte[4];
+				String ip;
+				int port;
+				int countIp = 15;
+				int countPort = 4;
+				for (int i = 0; i < Gerenciador.entidades.size(); i++) {
+					stringIp = Arrays.copyOfRange(buffer, 1, countIp);
+					stringPorta = Arrays.copyOfRange(buffer, countIp + 1, countIp + countPort + 1);
+					countIp = countIp + countIp;
+					countPort = countPort + countPort;
+					ip = new String(stringIp, "UTF-8").trim();
+					port = Integer.parseInt(new String(stringPorta, "UTF-8").trim());
+					Socket s = new Socket();
+					s.connect(new InetSocketAddress(ip, port));
+					Gerenciador.addEntidade(s);
+
+				}
 
 			}
-		} catch (UnsupportedEncodingException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 

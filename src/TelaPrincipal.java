@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -26,8 +27,7 @@ public class TelaPrincipal extends JFrame {
 	public static JTextField memoriaTotal;
 	public static JTextField cederQtde;
 	public static JTextField receberQtde;
-	
-	
+	public static JTextField randomDoor;
 
 	/**
 	 * Launch the application.
@@ -38,8 +38,6 @@ public class TelaPrincipal extends JFrame {
 				try {
 					TelaPrincipal frame = new TelaPrincipal();
 					frame.setVisible(true);
-					
-					
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -134,10 +132,13 @@ public class TelaPrincipal extends JFrame {
 		JButton btnSalvarQtde = new JButton("Salvar Qtde");
 		btnSalvarQtde.setBounds(90, 73, 111, 25);
 		contentPane.add(btnSalvarQtde);
-		
+
 		btnSalvarQtde.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
+				String qtdeCpu = CpuLocal.getText();
+				String qtdeMemo = MemoriaLocal.getText();
+				Gerenciador.changeCpuMemo(qtdeCpu, qtdeMemo);
 
 			}
 		});
@@ -213,6 +214,12 @@ public class TelaPrincipal extends JFrame {
 		JButton btnLiberarRecebido = new JButton("Liberar");
 		btnLiberarRecebido.setBounds(328, 314, 97, 25);
 		contentPane.add(btnLiberarRecebido);
+
+		randomDoor = new JTextField();
+		randomDoor.setEditable(false);
+		randomDoor.setBounds(213, 315, 96, 22);
+		contentPane.add(randomDoor);
+		randomDoor.setColumns(10);
 
 	}
 }

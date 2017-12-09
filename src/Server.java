@@ -14,10 +14,13 @@ public class Server implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+
 		try {
 			server = new ServerSocket(porta);
+
 			while (true) {
 				Gerenciador.addEntidade(server.accept());
+
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
