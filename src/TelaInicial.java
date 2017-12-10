@@ -16,7 +16,7 @@ public class TelaInicial extends JFrame {
 	private JPanel contentPane;
 	private JTextField ip;
 	public static JTextField porta;
-	public static int port;
+
 
 	public Gerenciador gerenciador;
 

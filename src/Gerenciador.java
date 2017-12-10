@@ -14,24 +14,20 @@ public class Gerenciador {
 	public static int totalCPU = 0;
 	public static int totalMemo = 0;
 	MyRunnable myRunnable = new MyRunnable();
-	
-	
 
 	@SuppressWarnings("resource")
-	
+
 	public Gerenciador(String ip) {
 		Random r = new Random();
-		porta = r.nextInt(10000);	
+		porta = r.nextInt(10000);
 		serversocket = new Server(this.porta);
 		Socket socket = new Socket();
 		new Thread(serversocket).start();
 
 		// entidade que se conecta no sistema nao e a primeira. .
 		if (!ip.equals("")) {
-			// if (!ip.equals("")&& porta !=0 ){
-
 			try {
-				socket.connect(new InetSocketAddress("", Integer.parseInt(TelaInicial.porta.getText())));
+				socket.connect(new InetSocketAddress("", Integer.parseInt(TelaInicial.porta.getText())));				
 				addEntidade(socket);
 				
 
@@ -61,6 +57,7 @@ public class Gerenciador {
 				socket.getLocalPort(), socket);
 		entidades.add(entidadeHandler);
 		new Thread(entidadeHandler).start();
+
 	}
 
 }

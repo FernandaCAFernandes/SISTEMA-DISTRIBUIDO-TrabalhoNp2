@@ -7,15 +7,13 @@ public class MyRunnable implements Runnable {
 		while (true) {
 			try {
 				int auxMemoTotal = 0;
-				int auxCpuTotal = 0;
-				System.out.println("Tam antes do for: "+ Gerenciador.entidades.size());
-
+				int auxCpuTotal = 0;				
+				System.out.println(Gerenciador.entidades.size());
 				for (int i = 0; i < Gerenciador.entidades.size(); i++) {
-					EntidadeHandler.validar();					
-						auxCpuTotal = auxCpuTotal + Gerenciador.entidades.get(i).entidade.getCpu();
-						auxMemoTotal = auxMemoTotal + Gerenciador.entidades.get(i).entidade.getMemoria();
-						
-					
+					EntidadeHandler.validar();
+					auxCpuTotal = auxCpuTotal + Gerenciador.entidades.get(i).entidade.getCpu();
+					auxMemoTotal = auxMemoTotal + Gerenciador.entidades.get(i).entidade.getMemoria();
+
 				}
 				auxCpuTotal = auxCpuTotal + Gerenciador.entidade.getCpu();
 				auxMemoTotal = auxMemoTotal + Gerenciador.entidade.getMemoria();

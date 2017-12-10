@@ -24,9 +24,12 @@ public class EntidadeHandler implements Runnable {
 		this.ip = ip;
 		this.porta = porta;
 		this.socket = socket;
+		entidade = new Entidade (0,0);
+		
+		// se n tiver o in/out da nullpointer exception no in size;
 		try {
-			in = socket.getInputStream();
-			out = socket.getOutputStream();
+			in = this.socket.getInputStream();
+			out = this.socket.getOutputStream();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
