@@ -14,6 +14,7 @@ public class Server implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		System.out.println( "Server com porta: " + porta);
 
 		try {
 			server = new ServerSocket(porta);

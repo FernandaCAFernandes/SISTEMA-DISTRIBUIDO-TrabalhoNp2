@@ -1,9 +1,10 @@
 public class Entidade {
-	
 	private int cpu;
 	private int memoria;
 	private int bloqueiaCpu;
 	private int bloqueioMemoria;
+	private int disponivelCpu;
+	private int disponivelMemoria;
 	private int recursoCpu;
 	private int recursoMemoria;
 	

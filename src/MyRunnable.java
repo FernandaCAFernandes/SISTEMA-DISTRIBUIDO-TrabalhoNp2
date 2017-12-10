@@ -1,35 +1,64 @@
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 public class MyRunnable implements Runnable {
 
 	public void run() {
-
+		List<EntidadeHandler> disconecteds = new LinkedList<EntidadeHandler>();
 		while (true) {
-			try {
-				int auxMemoTotal = 0;
-				int auxCpuTotal = 0;
 
-				for (int i = 0; i < Gerenciador.entidades.size(); i++) {
-					EntidadeHandler.validar();
-					auxCpuTotal = auxCpuTotal + Gerenciador.entidades.get(i).entidade.getCpu();
-					auxMemoTotal = auxMemoTotal + Gerenciador.entidades.get(i).entidade.getMemoria();
+			int auxMemoTotal = 0;
+			int auxCpuTotal = 0;
+			
+
+			EntidadeHandler entidade;
+			for (int i = 0; i < Gerenciador.entidades.size(); i++) {
+				entidade = Gerenciador.entidades.get(i);
+				if (!entidade.stop) {
+
+					try {
+						entidade.validar();
+						
+						auxCpuTotal = auxCpuTotal + entidade.entidade.getCpu();
+						auxMemoTotal = auxMemoTotal + entidade.entidade.getMemoria();
+					} catch (IOException e) {
+						Gerenciador.entidades.get(i).stop = true;
+						
+						auxCpuTotal = auxCpuTotal - entidade.entidade.getCpu();
+						auxMemoTotal = auxMemoTotal - entidade.entidade.getMemoria();
+						
+						disconecteds.add(entidade);
+						System.err.println(e.toString());
+					}
+
+					
 
 				}
-				auxCpuTotal = auxCpuTotal + Gerenciador.entidade.getCpu();
-				auxMemoTotal = auxMemoTotal + Gerenciador.entidade.getMemoria();
+			}
+			
+			
+			if (disconecteds.size() > 0) {
+				for(EntidadeHandler e : disconecteds) {
+					System.out.println(Gerenciador.entidades.remove(e));
+				}
+				
+				disconecteds.clear();
+			}
+			
+			
+			auxCpuTotal = auxCpuTotal + Gerenciador.entidade.getCpu();
+			auxMemoTotal = auxMemoTotal + Gerenciador.entidade.getMemoria();
 
-				TelaPrincipal.AttLabels(auxCpuTotal, auxMemoTotal);
+			TelaPrincipal.AttLabels(auxCpuTotal, auxMemoTotal);
+			try {
 				Thread.sleep(1000);
-
-			} catch (IOException e) {
-				e.printStackTrace();
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 		}
-
 	}
 
 }

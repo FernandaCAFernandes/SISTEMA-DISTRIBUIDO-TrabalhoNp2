@@ -1,15 +1,9 @@
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.nio.ByteBuffer;
 import java.util.Arrays;
-
-import javax.sound.sampled.AudioFormat.Encoding;
-
-import com.ibm.icu.impl.UResource.Array;
 
 public class EntidadeHandler implements Runnable {
 
@@ -19,7 +13,7 @@ public class EntidadeHandler implements Runnable {
 	Socket socket;
 	InputStream in;
 	static OutputStream out;
-	static byte[] buffer;
+	byte[] buffer;
 
 	public boolean stop;
 
@@ -46,33 +40,19 @@ public class EntidadeHandler implements Runnable {
 	// informar bloqueio
 	// informar recursos reservados
 	// [1]- tipo de msg ([2] - se memoria ou cpu?) [18] - qtde ??
-
-	public static void SalvarCpuLocal(String qtde) throws IOException {
-		// buffer[0] = 1
-		byte[] buffer = new byte[3];
+	
+	public void SalvarCpuMemLocal(String cpu, String mem) throws IOException {
+		String qtde = cpu +  "-" + mem;
+		byte[] buffer = new byte[1 + qtde.length()];
 		buffer[0] = 1;
-
 		for (int i = 0; i < qtde.length(); i++) {
 			buffer[i + 1] = (byte) qtde.codePointAt(i);
-			System.out.print(buffer[i]);
-
 		}
 
 		out.write(buffer);
 	}
 
-	public static void SalvarMemLocal(String qtde) throws IOException {
-		// buffer[0] = 2
-		byte[] buffer = new byte[3];
-		buffer[0] = 2;
-
-		for (int i = 0; i < qtde.length(); i++) {
-			buffer[i + 1] = (byte) qtde.codePointAt(i);
-		}
-		out.write(buffer);
-	}
-
-	public static void conexao() throws IOException {
+	public void conexao() throws IOException {
 		// codigo para iniciar conexao da entidade que acabou
 		// de entrar com todas as outros conectados no server q a entidade entrou;
 		buffer = new byte[1];
@@ -82,19 +62,22 @@ public class EntidadeHandler implements Runnable {
 
 	}
 
-	public static void validar() throws IOException {
+	public void validar() throws IOException {
 		// validar que a conexao esta estabelecida com somatorio
 		buffer = new byte[1];
-		buffer[0] = 9;
+		buffer[0] = 2;
+		
+		out.write(buffer);
 	}
 
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		int size = 0;
 		try {
 			while (!stop) {
 
-				int size = in.available();
+				size = in.available();
 
 				if (size > 0) {
 					buffer = new byte[size];
@@ -116,6 +99,9 @@ public class EntidadeHandler implements Runnable {
 		// ?????
 		// String.trim() - remove espacos em branco de ambos os lados da string.
 		int type = buffer[0] & 255;
+		byte[] message = null;
+		String[] tokenized = null;
+		String strMsg = null;
 		try {
 			switch (type) {
 			case 1:
@@ -123,23 +109,21 @@ public class EntidadeHandler implements Runnable {
 				// ler o buffer, pega o conteudo do buffer, salva na variavel da entidade seta
 				// no jTextField;
 				//diminuir o array pra evitar o erro
-				byte[] stringCpu = Arrays.copyOfRange(buffer, 1, 2);
+				message = Arrays.copyOfRange(buffer, 1, buffer.length);
 				
-				System.out.println(stringCpu[0]);
-				System.out.println();
+				//System.out.println("Cpu REcebida: " +stringCpu[0]);
 				
-				entidade.setCpu(Integer.parseInt(((new String(stringCpu, "UTF-8")).trim())));
-				TelaPrincipal.CpuLocal.setText(Integer.toString(entidade.getCpu()));
+				tokenized = new String(message, "UTF-8").trim().split("-");
+				
+				entidade.setCpu(Integer.parseInt(tokenized[0]));
+				entidade.setMemoria(Integer.parseInt(tokenized[1]));
+				//TelaPrincipal.CpuLocal.setText(Integer.toString(entidade.getCpu()));
 				break;
 			case 2:
 				// msm coisa
-				byte[] stringMemo = Arrays.copyOfRange(buffer, 1, 2);
+				message = Arrays.copyOfRange(buffer, 1, buffer.length);
 				
-				System.out.println(stringMemo[0]);
-				System.out.println();
-				
-				entidade.setMemoria(Integer.parseInt(((new String(stringMemo, "UTF-8")).trim())));
-				TelaPrincipal.MemoriaLocal.setText(Integer.toString(entidade.getMemoria()));
+				strMsg = new String(message, "UTF-8").trim();
 				break;
 			case 3:
 				// ip 15 (123.123.123.123) porta 4( 1 2 3 4)
@@ -149,9 +133,17 @@ public class EntidadeHandler implements Runnable {
 				int auxIpOuPorta = 0;
 				byte[] bufferConec = new byte[Gerenciador.entidades.size() * 19 + 1];
 				// codigo retornando os ips/portas
+				
+				
 				buffer[0] = 4;
+				
+				
 
-				for (int i = 0; i < Gerenciador.entidades.size(); i++) {
+				for (int i = 0; i < Gerenciador.entidades.size() - 1; i++) {
+					
+					if (this.equals(Gerenciador.entidades.get(i))) {
+						continue;						
+					}
 					String aux = Gerenciador.entidades.get(i).ip + Gerenciador.entidades.get(i).porta;
 					for (int j = i * 19; j < i * 19; j++) {
 						bufferConec[j + 1] = (byte) aux.codePointAt(j);
@@ -180,9 +172,16 @@ public class EntidadeHandler implements Runnable {
 					port = Integer.parseInt(new String(stringPorta, "UTF-8").trim());
 					Socket s = new Socket();
 					s.connect(new InetSocketAddress(ip, port));
+					
+					System.out.println("Eu n deveria aparecer meh :v");
 					Gerenciador.addEntidade(s);
 
 				}
+				
+				break;
+				
+			default:
+				break;
 
 			}
 		} catch (IOException e) {

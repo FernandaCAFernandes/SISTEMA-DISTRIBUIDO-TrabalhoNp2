@@ -9,27 +9,26 @@ public class Gerenciador {
 	static Entidade entidade = new Entidade(0, 0);
 	public static Server serversocket;
 	public static int porta;
-	public static ArrayList<EntidadeHandler> entidades = new ArrayList<>();
+	public static ArrayList<EntidadeHandler> entidades;
 	static Gerenciador gerenciador;
 	public static int totalCPU = 0;
 	public static int totalMemo = 0;
 	MyRunnable myRunnable = new MyRunnable();
 
-	@SuppressWarnings("resource")
-
 	public Gerenciador(String ip) {
 		Random r = new Random();
-		porta = r.nextInt(10000);
-		serversocket = new Server(this.porta);
+		porta = r.nextInt(9000 - 8500 + 1) + 8500;
+
+		serversocket = new Server(Gerenciador.porta);
 		Socket socket = new Socket();
+		entidades = new ArrayList<EntidadeHandler>();
 		new Thread(serversocket).start();
 
 		// entidade que se conecta no sistema nao e a primeira. .
 		if (!ip.equals("")) {
 			try {
-				socket.connect(new InetSocketAddress("", Integer.parseInt(TelaInicial.porta.getText())));				
+				socket.connect(new InetSocketAddress("", Integer.parseInt(TelaInicial.porta.getText())));
 				addEntidade(socket);
-				
 
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -37,25 +36,27 @@ public class Gerenciador {
 			}
 		}
 	}
-
+	
 	public void startup(String ip) {
 		if (gerenciador == null) {
-			gerenciador = new Gerenciador(ip);
 			new Thread(myRunnable).start();
 
 		}
 	}
 
 	public static void changeCpuMemo(String cpu, String memoria) {
-		
-		System.out.println(cpu + " /// " + memoria);
-		
+
+		//System.out.println(cpu + " /// " + memoria);
+
 		entidade.setCpu(Integer.parseInt(cpu));
 		entidade.setMemoria(Integer.parseInt(memoria));
-		
+
 		try {
-			EntidadeHandler.SalvarCpuLocal(cpu);
-			EntidadeHandler.SalvarMemLocal(memoria);
+
+			for (int i = 0; i < entidades.size(); i++) {
+				entidades.get(i).SalvarCpuMemLocal(cpu, memoria);
+
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
