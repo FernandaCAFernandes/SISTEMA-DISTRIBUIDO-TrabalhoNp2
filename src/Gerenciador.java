@@ -47,6 +47,9 @@ public class Gerenciador {
 	}
 
 	public static void changeCpuMemo(String cpu, String memoria) {
+		
+		System.out.println(cpu + " /// " + memoria);
+		
 		entidade.setCpu(Integer.parseInt(cpu));
 		entidade.setMemoria(Integer.parseInt(memoria));
 		

@@ -4,7 +4,10 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 import java.util.Arrays;
+
+import javax.sound.sampled.AudioFormat.Encoding;
 
 import com.ibm.icu.impl.UResource.Array;
 
@@ -46,7 +49,7 @@ public class EntidadeHandler implements Runnable {
 
 	public static void SalvarCpuLocal(String qtde) throws IOException {
 		// buffer[0] = 1
-		buffer = new byte[20];
+		byte[] buffer = new byte[3];
 		buffer[0] = 1;
 
 		for (int i = 0; i < qtde.length(); i++) {
@@ -60,7 +63,7 @@ public class EntidadeHandler implements Runnable {
 
 	public static void SalvarMemLocal(String qtde) throws IOException {
 		// buffer[0] = 2
-		byte[] buffer = new byte[20];
+		byte[] buffer = new byte[3];
 		buffer[0] = 2;
 
 		for (int i = 0; i < qtde.length(); i++) {
@@ -119,16 +122,22 @@ public class EntidadeHandler implements Runnable {
 				// passando o valor no buffer pra uma string codificada em utf-8
 				// ler o buffer, pega o conteudo do buffer, salva na variavel da entidade seta
 				// no jTextField;
-				byte[] stringCpu = Arrays.copyOfRange(buffer, 1, buffer.length);
+				//diminuir o array pra evitar o erro
+				byte[] stringCpu = Arrays.copyOfRange(buffer, 1, 2);
 				
-				System.out.println(((new String(stringCpu, "UTF-8")).trim()));
+				System.out.println(stringCpu[0]);
+				System.out.println();
 				
 				entidade.setCpu(Integer.parseInt(((new String(stringCpu, "UTF-8")).trim())));
 				TelaPrincipal.CpuLocal.setText(Integer.toString(entidade.getCpu()));
 				break;
 			case 2:
 				// msm coisa
-				byte[] stringMemo = Arrays.copyOfRange(buffer, 1, buffer.length);
+				byte[] stringMemo = Arrays.copyOfRange(buffer, 1, 2);
+				
+				System.out.println(stringMemo[0]);
+				System.out.println();
+				
 				entidade.setMemoria(Integer.parseInt(((new String(stringMemo, "UTF-8")).trim())));
 				TelaPrincipal.MemoriaLocal.setText(Integer.toString(entidade.getMemoria()));
 				break;
