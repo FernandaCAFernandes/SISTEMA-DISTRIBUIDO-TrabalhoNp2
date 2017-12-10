@@ -49,6 +49,14 @@ public class Gerenciador {
 	public static void changeCpuMemo(String cpu, String memoria) {
 		entidade.setCpu(Integer.parseInt(cpu));
 		entidade.setMemoria(Integer.parseInt(memoria));
+		
+		try {
+			EntidadeHandler.SalvarCpuLocal(cpu);
+			EntidadeHandler.SalvarMemLocal(memoria);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

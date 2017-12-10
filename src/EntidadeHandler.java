@@ -24,8 +24,8 @@ public class EntidadeHandler implements Runnable {
 		this.ip = ip;
 		this.porta = porta;
 		this.socket = socket;
-		entidade = new Entidade (0,0);
-		
+		entidade = new Entidade(0, 0);
+
 		// se n tiver o in/out da nullpointer exception no in size;
 		try {
 			in = this.socket.getInputStream();
@@ -51,8 +51,10 @@ public class EntidadeHandler implements Runnable {
 
 		for (int i = 0; i < qtde.length(); i++) {
 			buffer[i + 1] = (byte) qtde.codePointAt(i);
+			System.out.print(buffer[i]);
 
 		}
+
 		out.write(buffer);
 	}
 

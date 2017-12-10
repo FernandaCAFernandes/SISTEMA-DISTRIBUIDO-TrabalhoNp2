@@ -7,8 +7,8 @@ public class MyRunnable implements Runnable {
 		while (true) {
 			try {
 				int auxMemoTotal = 0;
-				int auxCpuTotal = 0;				
-				System.out.println(Gerenciador.entidades.size());
+				int auxCpuTotal = 0;
+
 				for (int i = 0; i < Gerenciador.entidades.size(); i++) {
 					EntidadeHandler.validar();
 					auxCpuTotal = auxCpuTotal + Gerenciador.entidades.get(i).entidade.getCpu();
