@@ -40,9 +40,9 @@ public class EntidadeHandler implements Runnable {
 	// informar bloqueio
 	// informar recursos reservados
 	// [1]- tipo de msg ([2] - se memoria ou cpu?) [18] - qtde ??
-	
+
 	public void SalvarCpuMemLocal(String cpu, String mem) throws IOException {
-		String qtde = cpu +  "-" + mem;
+		String qtde = cpu + "-" + mem;
 		byte[] buffer = new byte[1 + qtde.length()];
 		buffer[0] = 1;
 		for (int i = 0; i < qtde.length(); i++) {
@@ -66,7 +66,7 @@ public class EntidadeHandler implements Runnable {
 		// validar que a conexao esta estabelecida com somatorio
 		buffer = new byte[1];
 		buffer[0] = 2;
-		
+
 		out.write(buffer);
 	}
 
@@ -108,23 +108,20 @@ public class EntidadeHandler implements Runnable {
 				// passando o valor no buffer pra uma string codificada em utf-8
 				// ler o buffer, pega o conteudo do buffer, salva na variavel da entidade seta
 				// no jTextField;
-				//diminuir o array pra evitar o erro
+				// diminuir o array pra evitar o erro
 				message = Arrays.copyOfRange(buffer, 1, buffer.length);
-				
-				//System.out.println("Cpu REcebida: " +stringCpu[0]);
-				
+
+				// System.out.println("Cpu REcebida: " +stringCpu[0]);
+
 				tokenized = new String(message, "UTF-8").trim().split("-");
-				
+
 				entidade.setCpu(Integer.parseInt(tokenized[0]));
 				entidade.setMemoria(Integer.parseInt(tokenized[1]));
-				//TelaPrincipal.CpuLocal.setText(Integer.toString(entidade.getCpu()));
+				// TelaPrincipal.CpuLocal.setText(Integer.toString(entidade.getCpu()));
 				break;
-			case 2:
-				// msm coisa
-				message = Arrays.copyOfRange(buffer, 1, buffer.length);
-				
-				strMsg = new String(message, "UTF-8").trim();
-				break;
+
+
+
 			case 3:
 				// ip 15 (123.123.123.123) porta 4( 1 2 3 4)
 				// pega ip e porta de cada entidade conectada ao servidor q entidade nova se
@@ -133,16 +130,13 @@ public class EntidadeHandler implements Runnable {
 				int auxIpOuPorta = 0;
 				byte[] bufferConec = new byte[Gerenciador.entidades.size() * 19 + 1];
 				// codigo retornando os ips/portas
-				
-				
+
 				buffer[0] = 4;
-				
-				
 
 				for (int i = 0; i < Gerenciador.entidades.size() - 1; i++) {
-					
+
 					if (this.equals(Gerenciador.entidades.get(i))) {
-						continue;						
+						continue;
 					}
 					String aux = Gerenciador.entidades.get(i).ip + Gerenciador.entidades.get(i).porta;
 					for (int j = i * 19; j < i * 19; j++) {
@@ -172,14 +166,14 @@ public class EntidadeHandler implements Runnable {
 					port = Integer.parseInt(new String(stringPorta, "UTF-8").trim());
 					Socket s = new Socket();
 					s.connect(new InetSocketAddress(ip, port));
-					
+
 					System.out.println("Eu n deveria aparecer meh :v");
 					Gerenciador.addEntidade(s);
 
 				}
-				
+
 				break;
-				
+
 			default:
 				break;
 

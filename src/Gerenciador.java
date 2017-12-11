@@ -36,7 +36,7 @@ public class Gerenciador {
 			}
 		}
 	}
-	
+
 	public void startup(String ip) {
 		if (gerenciador == null) {
 			new Thread(myRunnable).start();
@@ -46,7 +46,7 @@ public class Gerenciador {
 
 	public static void changeCpuMemo(String cpu, String memoria) {
 
-		//System.out.println(cpu + " /// " + memoria);
+		// System.out.println(cpu + " /// " + memoria);
 
 		entidade.setCpu(Integer.parseInt(cpu));
 		entidade.setMemoria(Integer.parseInt(memoria));
@@ -63,6 +63,7 @@ public class Gerenciador {
 		}
 
 	}
+	
 
 	public static void addEntidade(Socket socket) {
 		EntidadeHandler entidadeHandler = new EntidadeHandler(socket.getRemoteSocketAddress().toString(),

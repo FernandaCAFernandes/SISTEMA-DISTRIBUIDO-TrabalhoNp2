@@ -22,9 +22,13 @@ public class TelaPrincipal extends JFrame {
 	public static JTextField MemoriaLocal;
 	public static JTextField CpuTotal;
 	public static JTextField memoriaTotal;
-	public static JTextField cederQtde;
-	public static JTextField receberQtde;
+	public static JTextField cederCpuQtde;
+	public static JTextField receberCpuQtde;
 	public static JTextField randomDoor;
+	private JTextField cpuLiberada;
+	private JTextField memoLiberada;
+	private JTextField cederMemoQtde;
+	private JTextField receberMemoQtde;
 
 	/**
 	 * Launch the application.
@@ -63,50 +67,50 @@ public class TelaPrincipal extends JFrame {
 		contentPane.setLayout(null);
 
 		JLabel lblBloqueiados = new JLabel("Bloqueiados");
-		lblBloqueiados.setBounds(38, 120, 83, 16);
+		lblBloqueiados.setBounds(231, 120, 83, 16);
 		contentPane.add(lblBloqueiados);
 
 		JLabel lblRecursosReservados = new JLabel("Recursos Reservados");
-		lblRecursosReservados.setBounds(357, 120, 129, 16);
+		lblRecursosReservados.setBounds(395, 120, 129, 16);
 		contentPane.add(lblRecursosReservados);
 
 		JLabel lblCpu = new JLabel("CPU:");
-		lblCpu.setBounds(12, 149, 56, 16);
+		lblCpu.setBounds(203, 149, 56, 16);
 		contentPane.add(lblCpu);
 
 		cpuBloqueado = new JTextField();
 		cpuBloqueado.setEditable(false);
-		cpuBloqueado.setBounds(80, 149, 61, 22);
+		cpuBloqueado.setBounds(273, 146, 61, 22);
 		contentPane.add(cpuBloqueado);
 		cpuBloqueado.setColumns(10);
 
 		JLabel lblMemoria = new JLabel("Memoria:");
-		lblMemoria.setBounds(12, 178, 56, 16);
+		lblMemoria.setBounds(203, 190, 56, 16);
 		contentPane.add(lblMemoria);
 
 		memoriaBloqueado = new JTextField();
 		memoriaBloqueado.setEditable(false);
-		memoriaBloqueado.setBounds(80, 184, 61, 22);
+		memoriaBloqueado.setBounds(273, 187, 61, 22);
 		contentPane.add(memoriaBloqueado);
 		memoriaBloqueado.setColumns(10);
 
 		JLabel lblCpu_1 = new JLabel("CPU:");
-		lblCpu_1.setBounds(341, 149, 56, 16);
+		lblCpu_1.setBounds(382, 149, 56, 16);
 		contentPane.add(lblCpu_1);
 
 		JLabel lblMemoria_1 = new JLabel("Memoria:");
-		lblMemoria_1.setBounds(341, 187, 56, 16);
+		lblMemoria_1.setBounds(382, 187, 56, 16);
 		contentPane.add(lblMemoria_1);
 
 		cpuReservado = new JTextField();
 		cpuReservado.setEditable(false);
-		cpuReservado.setBounds(409, 146, 61, 22);
+		cpuReservado.setBounds(450, 146, 61, 22);
 		contentPane.add(cpuReservado);
 		cpuReservado.setColumns(10);
 
 		memoriaReservado = new JTextField();
 		memoriaReservado.setEditable(false);
-		memoriaReservado.setBounds(409, 184, 61, 22);
+		memoriaReservado.setBounds(450, 184, 61, 22);
 		contentPane.add(memoriaReservado);
 		memoriaReservado.setColumns(10);
 
@@ -144,81 +148,111 @@ public class TelaPrincipal extends JFrame {
 
 		JLabel lblCpuTotal = new JLabel("CPU Total:");
 		lblCpuTotal.setForeground(Color.RED);
-		lblCpuTotal.setBounds(282, 13, 96, 16);
+		lblCpuTotal.setBounds(307, 13, 96, 16);
 		contentPane.add(lblCpuTotal);
 
 		JLabel lblNewLabel = new JLabel("Memoria Total:");
 		lblNewLabel.setForeground(Color.RED);
-		lblNewLabel.setBounds(282, 42, 111, 16);
+		lblNewLabel.setBounds(307, 42, 111, 16);
 		contentPane.add(lblNewLabel);
 
 		CpuTotal = new JTextField();
 		CpuTotal.setEditable(false);
-		CpuTotal.setBounds(395, 10, 116, 22);
+		CpuTotal.setBounds(430, 10, 116, 22);
 		contentPane.add(CpuTotal);
 		CpuTotal.setColumns(10);
 
 		memoriaTotal = new JTextField();
 		memoriaTotal.setEditable(false);
-		memoriaTotal.setBounds(395, 39, 116, 22);
+		memoriaTotal.setBounds(430, 39, 116, 22);
 		contentPane.add(memoriaTotal);
 		memoriaTotal.setColumns(10);
 
 		JLabel lblReceber = new JLabel("Receber");
-		lblReceber.setBounds(399, 225, 56, 16);
+		lblReceber.setBounds(414, 225, 56, 16);
 		contentPane.add(lblReceber);
 
 		JLabel lblDar = new JLabel("Ceder");
-		lblDar.setBounds(80, 225, 56, 16);
+		lblDar.setBounds(63, 225, 56, 16);
 		contentPane.add(lblDar);
 
 		JCheckBox cpuCederCheck = new JCheckBox("CPU");
-		cpuCederCheck.setBounds(100, 250, 113, 25);
+		cpuCederCheck.setBounds(90, 250, 113, 25);
 		contentPane.add(cpuCederCheck);
 
 		JCheckBox memoriaCederCheck = new JCheckBox("Memoria");
-		memoriaCederCheck.setBounds(100, 280, 113, 25);
+		memoriaCederCheck.setBounds(88, 285, 113, 25);
 		contentPane.add(memoriaCederCheck);
 
-		cederQtde = new JTextField();
-		cederQtde.setBounds(27, 254, 63, 22);
-		contentPane.add(cederQtde);
-		cederQtde.setColumns(10);
+		cederCpuQtde = new JTextField();
+		cederCpuQtde.setBounds(12, 254, 63, 22);
+		contentPane.add(cederCpuQtde);
+		cederCpuQtde.setColumns(10);
 
-		JButton btnOk = new JButton("Ok");
-		btnOk.setBounds(104, 314, 97, 25);
-		contentPane.add(btnOk);
+		JButton okCeder = new JButton("Ok");
+		okCeder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		okCeder.setBounds(88, 319, 97, 25);
+		contentPane.add(okCeder);
 
-		receberQtde = new JTextField();
-		receberQtde.setBounds(341, 251, 73, 22);
-		contentPane.add(receberQtde);
-		receberQtde.setColumns(10);
+		receberCpuQtde = new JTextField();
+		receberCpuQtde.setBounds(362, 254, 73, 22);
+		contentPane.add(receberCpuQtde);
+		receberCpuQtde.setColumns(10);
 
 		JCheckBox cpuReceberCheck = new JCheckBox("CPU");
-		cpuReceberCheck.setBounds(433, 250, 113, 25);
+		cpuReceberCheck.setBounds(443, 250, 113, 25);
 		contentPane.add(cpuReceberCheck);
 
 		JCheckBox memoriaReceberCheck = new JCheckBox("Memoria");
-		memoriaReceberCheck.setBounds(433, 280, 113, 25);
+		memoriaReceberCheck.setBounds(443, 280, 113, 25);
 		contentPane.add(memoriaReceberCheck);
 
-		JButton btnOk_1 = new JButton("Ok");
-		btnOk_1.setBounds(437, 314, 97, 25);
-		contentPane.add(btnOk_1);
-
-		JButton btnLiberarCedido = new JButton("Liberar ");
-		btnLiberarCedido.setBounds(0, 314, 97, 25);
-		contentPane.add(btnLiberarCedido);
-
-		JButton btnLiberarRecebido = new JButton("Liberar");
-		btnLiberarRecebido.setBounds(328, 314, 97, 25);
-		contentPane.add(btnLiberarRecebido);
+		JButton okReceber = new JButton("Ok");
+		okReceber.setBounds(437, 314, 97, 25);
+		contentPane.add(okReceber);
 
 		randomDoor = new JTextField();
 		randomDoor.setEditable(false);
-		randomDoor.setBounds(213, 315, 96, 22);
+		randomDoor.setBounds(231, 314, 96, 22);
 		contentPane.add(randomDoor);
 		randomDoor.setColumns(10);
+		
+		JLabel lblLivre = new JLabel("Livre");
+		lblLivre.setBounds(45, 120, 56, 16);
+		contentPane.add(lblLivre);
+		
+		JLabel cpuLivre = new JLabel("CPU:");
+		cpuLivre.setBounds(12, 149, 56, 16);
+		contentPane.add(cpuLivre);
+		
+		JLabel memoriaLivre = new JLabel("Memoria:");
+		memoriaLivre.setBounds(12, 190, 56, 16);
+		contentPane.add(memoriaLivre);
+		
+		cpuLiberada = new JTextField();
+		cpuLiberada.setEditable(false);
+		cpuLiberada.setBounds(80, 146, 61, 22);
+		contentPane.add(cpuLiberada);
+		cpuLiberada.setColumns(10);
+		
+		memoLiberada = new JTextField();
+		memoLiberada.setEditable(false);
+		memoLiberada.setBounds(80, 187, 61, 22);
+		contentPane.add(memoLiberada);
+		memoLiberada.setColumns(10);
+		
+		cederMemoQtde = new JTextField();
+		cederMemoQtde.setBounds(12, 286, 61, 22);
+		contentPane.add(cederMemoQtde);
+		cederMemoQtde.setColumns(10);
+		
+		receberMemoQtde = new JTextField();
+		receberMemoQtde.setBounds(362, 281, 72, 22);
+		contentPane.add(receberMemoQtde);
+		receberMemoQtde.setColumns(10);
 
 	}
 }
