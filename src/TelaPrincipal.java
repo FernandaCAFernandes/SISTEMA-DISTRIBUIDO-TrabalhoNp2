@@ -48,7 +48,7 @@ public class TelaPrincipal extends JFrame {
 	}
 
 	public static void AttLabels(int qtdeTotalCpu, int qtdeTotalMemo) {
-//		System.out.println("Tela: " + qtdeTotalCpu + " // " + qtdeTotalMemo);
+		// System.out.println("Tela: " + qtdeTotalCpu + " // " + qtdeTotalMemo);
 
 		CpuTotal.setText(Integer.toString(qtdeTotalCpu));
 		memoriaTotal.setText(Integer.toString(qtdeTotalMemo));
@@ -66,9 +66,9 @@ public class TelaPrincipal extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblBloqueiados = new JLabel("Bloqueiados");
-		lblBloqueiados.setBounds(231, 120, 83, 16);
-		contentPane.add(lblBloqueiados);
+		JLabel lblBloqueados = new JLabel("Bloqueados");
+		lblBloqueados.setBounds(231, 120, 83, 16);
+		contentPane.add(lblBloqueados);
 
 		JLabel lblRecursosReservados = new JLabel("Recursos Reservados");
 		lblRecursosReservados.setBounds(395, 120, 129, 16);
@@ -190,12 +190,32 @@ public class TelaPrincipal extends JFrame {
 		cederCpuQtde.setColumns(10);
 
 		JButton okCeder = new JButton("Ok");
-		okCeder.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
 		okCeder.setBounds(88, 319, 97, 25);
 		contentPane.add(okCeder);
+		okCeder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				/*
+				 * String qtdeAuxCpu; String qtdeAuxMemo; liberar recurso test... erro comentar
+				 * tudo :v if (cpuCederCheck.isSelected() == true &&
+				 * memoriaCederCheck.isSelected() == false) { qtdeAuxCpu =
+				 * cederCpuQtde.getText(); qtdeAuxMemo = Integer.toString(0);
+				 * Gerenciador.changeCpuMemoLiberada(qtdeAuxCpu, qtdeAuxMemo);
+				 * 
+				 * } else { if (cpuCederCheck.isSelected() == false &&
+				 * memoriaCederCheck.isSelected() == true) {
+				 * 
+				 * qtdeAuxCpu = Integer.toString(0); qtdeAuxMemo = cederMemoQtde.getText();
+				 * Gerenciador.changeCpuMemoLiberada(qtdeAuxCpu, qtdeAuxMemo);
+				 * 
+				 * } else { if (cpuCederCheck.isSelected() == true &&
+				 * memoriaCederCheck.isSelected() == true) { qtdeAuxCpu =
+				 * cederCpuQtde.getText(); qtdeAuxMemo = cederMemoQtde.getText();
+				 * Gerenciador.changeCpuMemoLiberada(qtdeAuxCpu, qtdeAuxMemo);
+				 * 
+				 * } } }
+				 */
+			}
+		});
 
 		receberCpuQtde = new JTextField();
 		receberCpuQtde.setBounds(362, 254, 73, 22);
@@ -219,36 +239,36 @@ public class TelaPrincipal extends JFrame {
 		randomDoor.setBounds(231, 314, 96, 22);
 		contentPane.add(randomDoor);
 		randomDoor.setColumns(10);
-		
+
 		JLabel lblLivre = new JLabel("Livre");
 		lblLivre.setBounds(45, 120, 56, 16);
 		contentPane.add(lblLivre);
-		
+
 		JLabel cpuLivre = new JLabel("CPU:");
 		cpuLivre.setBounds(12, 149, 56, 16);
 		contentPane.add(cpuLivre);
-		
+
 		JLabel memoriaLivre = new JLabel("Memoria:");
 		memoriaLivre.setBounds(12, 190, 56, 16);
 		contentPane.add(memoriaLivre);
-		
+
 		cpuLiberada = new JTextField();
 		cpuLiberada.setEditable(false);
 		cpuLiberada.setBounds(80, 146, 61, 22);
 		contentPane.add(cpuLiberada);
 		cpuLiberada.setColumns(10);
-		
+
 		memoLiberada = new JTextField();
 		memoLiberada.setEditable(false);
 		memoLiberada.setBounds(80, 187, 61, 22);
 		contentPane.add(memoLiberada);
 		memoLiberada.setColumns(10);
-		
+
 		cederMemoQtde = new JTextField();
 		cederMemoQtde.setBounds(12, 286, 61, 22);
 		contentPane.add(cederMemoQtde);
 		cederMemoQtde.setColumns(10);
-		
+
 		receberMemoQtde = new JTextField();
 		receberMemoQtde.setBounds(362, 281, 72, 22);
 		contentPane.add(receberMemoQtde);

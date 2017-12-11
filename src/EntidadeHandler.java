@@ -52,6 +52,20 @@ public class EntidadeHandler implements Runnable {
 		out.write(buffer);
 	}
 
+	// metodo salvar cpu/memo liberada
+	// erro delete :c
+
+	/* public void SalvarCpuMemoLiberada(String cpu, String memo) throws IOException {
+		String qtde = cpu + "-" + memo;
+		byte[] buffer = new byte[1 + qtde.length()];
+		buffer[0] = 2;
+
+		for (int i = 0; i < qtde.length(); i++) {
+			buffer[i + 1] = (byte) qtde.codePointAt(i);
+		}
+		out.write(buffer);
+	} */
+
 	public void conexao() throws IOException {
 		// codigo para iniciar conexao da entidade que acabou
 		// de entrar com todas as outros conectados no server q a entidade entrou;
@@ -120,7 +134,14 @@ public class EntidadeHandler implements Runnable {
 				// TelaPrincipal.CpuLocal.setText(Integer.toString(entidade.getCpu()));
 				break;
 
+			/* case 2:
 
+				message = Arrays.copyOfRange(buffer, 1, buffer.length);
+
+				tokenized = new String(message, "UTF-8").trim().split("-");
+				entidade.setLiberadoCpu(Integer.parseInt(tokenized[0]));
+				entidade.setLiberadoCpu(Integer.parseInt(tokenized[1]));
+				break; */
 
 			case 3:
 				// ip 15 (123.123.123.123) porta 4( 1 2 3 4)

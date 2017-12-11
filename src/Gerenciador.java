@@ -63,7 +63,22 @@ public class Gerenciador {
 		}
 
 	}
-	
+
+	// att cpu/memo liberada
+
+/*	public static void changeCpuMemoLiberada(String cpu, String memoria) {
+		entidade.setLiberadoCpu(Integer.parseInt(cpu));
+		entidade.setLiberadoCpu(Integer.parseInt(memoria));
+		try {
+			for (int i = 0; i < entidades.size(); i++) {
+				entidades.get(i).SalvarCpuMemoLiberada(cpu, memoria);
+
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	} */
 
 	public static void addEntidade(Socket socket) {
 		EntidadeHandler entidadeHandler = new EntidadeHandler(socket.getRemoteSocketAddress().toString(),

@@ -3,6 +3,24 @@ public class Entidade {
 	private int memoria;
 	private int bloqueiaCpu;
 	private int bloqueioMemoria;
+	private int liberadoCpu;
+	private int loberadoMemo;
+
+	public int getLiberadoCpu() {
+		return liberadoCpu;
+	}
+
+	public void setLiberadoCpu(int liberadoCpu) {
+		this.liberadoCpu = liberadoCpu;
+	}
+
+	public int getLoberadoMemo() {
+		return loberadoMemo;
+	}
+
+	public void setLoberadoMemo(int loberadoMemo) {
+		this.loberadoMemo = loberadoMemo;
+	}
 
 	private int recursoCpu;
 	private int recursoMemoria;
